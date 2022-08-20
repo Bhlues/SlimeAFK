@@ -10,17 +10,37 @@ const express = require('express')
 express().get('/', (req, res) => res.send(`${Math.random()}`)).listen(8080)
 
 const bot = mineflayer.createBot({
-  host: server,
   username: name,
   password: '',
+  host: server,
+  version: '1.8.9',
   auth: 'microsoft',
+  defaultChatPatterns: false
 })
 
-let sb = false
+bot.setSettings({
+  viewDistance: 'tiny'
+})
 
-bot.on('login', () => sb = false)
+let skyblock = false
+
+bot.on('login', () => {
+  skyblock = false
+  console.log(`BOT LOGGED INTO: '${server}'`)
+})
+
 bot.on('spawn', () => {
-	setTimeout(() => {
-		bot.chat(sb ? '/is' : '/play sb')
-	}, 10000 * Math.random())
+    setTimeout(() => {
+    let cmd = skyblock ? '/is' : '/play sb'
+    skyblock = true
+        bot.chat(cmd)
+    console.log(`BOT RAN COMMAND: '${cmd}'`)
+    }, 10000 * Math.random() + 10000)
+})
+
+bot.on('message', (...args) => {
+  let msg = args.toString().trim().replace(',chat', '').replace(',game_info', '')
+  if ((msg.includes('❤') && msg.includes('❈') && msg.includes('✎')) || msg.length == 0) return
+
+  console.log(msg)
 })
