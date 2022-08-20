@@ -16,9 +16,6 @@ const bot = mineflayer.createBot({
   defaultChatPatterns: false
 })
 
-bot.setSettings({
-  viewDistance: 'tiny'
-})
 
 let skyblock = false
 
