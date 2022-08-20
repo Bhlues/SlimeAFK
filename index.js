@@ -5,9 +5,7 @@ const server = 'mc.hypixel.net'
 */
 
 const mineflayer = require('mineflayer')
-const express = require('express')
 
-express().get('/', (req, res) => res.send(`${Math.random()}`)).listen(8080)
 
 const bot = mineflayer.createBot({
   username: name,
